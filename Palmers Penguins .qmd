@@ -1,0 +1,25 @@
+---
+title: "Palmers Penguins Analysis"
+format: html
+editor: visual
+author: Sara Taloumis
+execute:
+  keep-md: true
+---
+
+## Palmer Penguins 
+
+Penguins
+
+```{r}
+#Load the tidyverse
+library(tidyverse)
+
+#Read the penguins_samp1 data file from github
+penguins <- read_csv("https://raw.githubusercontent.com/mcduryea/Intro-to-Bioinformatics/main/data/penguins_samp1.csv")
+
+#See the first six rows of the data we've read in to our notebook
+penguins %>% head()
+```
+
+This is a table of species of penguins and the island they live on and comparing their bill length, bill depth, and flipper length, body mass, and sex. They all are the same species and live on the same island and their bills are all similar in measurement since they are all males.
