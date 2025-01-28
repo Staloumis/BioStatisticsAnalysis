@@ -7,7 +7,7 @@ execute:
   keep-md: true
 ---
 
-## Palmer Penguins 
+## Palmer Penguins
 
 Penguins
 
@@ -23,3 +23,171 @@ penguins %>% head()
 ```
 
 This is a table of species of penguins and the island they live on and comparing their bill length, bill depth, and flipper length, body mass, and sex. They all are the same species and live on the same island and their bills are all similar in measurement since they are all males.
+
+## Data Manipulation
+
+We’ll be learning how to use R code to manipulate data in this section. In particular, we’ll learn how to filter rows, subset columns, group data, and compute summary statistics.
+
+```{r}
+penguins %>%
+  count(island)
+```
+
+```{r}
+penguins %>%
+  count(island, species) %>%
+  pivot_wider(names_from = species, values_from = n, values_fill = 0)
+```
+
+```{r}
+penguins %>% count(island, species)
+```
+
+```{r}
+library(kableExtra)
+penguins %>%
+  count(island, species) %>%
+  pivot_wider(names_from = species, values_from = n, values_fill = 0) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("hover", "striped"))
+
+```
+
+```{r}
+penguins %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm))
+```
+
+```{r}
+penguins %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE))
+```
+
+```{r}
+penguins %>%
+  summarize(
+    min_bill_length = min(bill_length_mm, na.rm = TRUE),
+    first_quartile_bill_length = quantile(bill_length_mm, 0.25, na.rm = TRUE),
+    median_bill_length = median(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    third_quartile_bill_length = quantile(bill_length_mm, 0.75, na.rm = TRUE),
+    standard_deviation_bill_length = sd(bill_length_mm, na.rm = TRUE)
+    ) %>%
+  pivot_longer(cols = everything())
+```
+
+```{r}
+penguins %>%
+  select(species, island, sex, year)
+```
+
+```{r}
+penguins %>%
+  select(species, island, sex, year) %>%
+  filter(species == "Chinstrap")
+```
+
+```{r}
+chinstraps <- penguins %>%
+  select(species, island, sex, year) %>%
+  filter(species == "Chinstrap") %>%
+  select(-species)
+
+chinstraps %>%
+  head()
+```
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    mean_bill_depth_mm = mean(bill_depth_mm, na.rm = TRUE),
+    sd_bill_depth_mm = sd(bill_depth_mm, na.rm = TRUE)
+  )
+```
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = species)) +
+  labs(title ="Counts of Penguin Species",
+       x = "Species", y = "Count")
+```
+
+This chart represents the count of penguins with relevance to three different species of penguins. The Gentoo has the most amount which its above 30, compared to Adelie and Chinstrap penguins which are below ten.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = bill_length_mm),
+                 color = "white",
+                 fill = "blue") +
+  labs(title ="Distribution of Bill Lengths",
+       x = "Bill Length (mm)", y = "Count")
+```
+
+By observing the bar graph, we can see that the average bill length is about 45-47mm long. The other bill lengths averaged 4 and below.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_point(mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  labs(title = "Bill Depth and Length",
+       x = "Bill Depth (mm)",
+       y = "Bill Length (mm)")
+```
+
+This graph shows that every bill length with bill depth is different.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = island, fill = species)) +
+  labs(title = "Species by Island",
+       x = "Island",
+       y = "Species")
+```
+
+There are a bountiful amount of Genetoo penguins on the Biscoe Island compared to the other islands with not that many penguins on them. The Adelie penguins though live on each of the islands and Chinstrap penguins only live on Dream Island.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_boxplot(mapping = aes(x = bill_depth_mm, y = species)) +
+  labs(title = "Bill Depth by Species",
+       x = "Bill Depth (mm)",
+       y = "")
+```
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = bill_depth_mm)) +
+  facet_wrap(~species, ncol = 1) +
+  labs(title = "Bill Depth by Species",
+       x = "Bill Depth (mm)",
+       y = "")
+```
+
+The bill depth on the Adelie penguins are deeper than Gentoo. Chinstrap however have 1 thats the length of 18mm and 19mm long. Gentoo has a bill length of below 18mm.
+
+```{r}
+penguins %>%
+  filter(!is.na(sex)) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = bill_length_mm, 
+                           y = flipper_length_mm,
+                           color = species,
+                           shape = sex)) +
+  geom_smooth(mapping = aes(x = bill_length_mm,
+                            y = flipper_length_mm,
+                            color = species),
+              method = "lm") +
+  facet_grid(island ~ sex, scales = "free") +
+  labs(title = "Flipper and Bill Lengths by Species and Sex",
+       x = "Bill Length (mm)",
+       y = "Flipper Length(mm)") +
+  theme_light()
+```
+
+The bill length of a male and female penguin do exceed 45mm because the lines on the graph keep progressing forward.
