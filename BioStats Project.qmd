@@ -1,0 +1,134 @@
+---
+title: "BioStats Project"
+format: html
+editor: visual
+---
+
+---
+title: "Homework 4 Generating Hypotheses"
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+```{r}
+1 + 1
+```
+
+```{}
+```
+
+```{r}
+#install.packages("tidymodels")
+library(tidymodels)
+
+my_data_splits <- initial_split(frogs, prop = 0.5)
+
+exploratory_data <- training(my_data_splits)
+test_data <- testing(my_data_splits)
+```
+
+```{r}
+#Load the tidyverse
+library(tidyverse)
+
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv')
+
+```
+
+```{r}
+# Get the Data
+
+# Read in with tidytuesdayR package 
+# Install from CRAN via: install.packages("tidytuesdayR")
+# This loads the readme and all the datasets for the week of interest
+
+# Either ISO-8601 date or year/week works!
+
+tuesdata <- tidytuesdayR::tt_load('2022-08-02')
+tuesdata <- tidytuesdayR::tt_load(2022, week = 31)
+
+frogs <- tuesdata$frogs
+
+# Or read in the data manually
+
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv')
+
+```
+
+```{r}
+library(tidyverse)
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv',
+  col_names = TRUE,
+  trim_ws = FALSE,
+  skip = 2
+)
+```
+
+**Abstract**
+
+In this analysis of Oregon Spotted Frog data from 2018, the habitats of female and male frogs are analyzed on what habitat allows them to flourish with the consideration of predators and external factors. There are different habitat types, water type, and type of land. With 156 observations and 16 variables, we are going to analyze 3 variables.
+
+**Introduction**
+
+Oregon Spotted Frogs can be found in Southern Canada, along the Columbia River in Washington, and Klamath Valley in Oregon. Some were located in California but went extirpated and are no longer found in California. These frogs can range from 4.4-10.2 cm in length with the females tending to be larger than the males for reproductive purposes. They reproduce in late winter in river and ponds for about four weeks and females lay one egg mass which contains around 643 eggs. In the data set, Habitat Type, Water, and Type of land is analyzed to see which environment provides the best conditions for these frogs to thrive. The data was gathered by Tom Mock he observed the frogs being released into a pond, reservoir, and river and then tracked their movements. This can tell us how much they thrived in the habitats they encountered.
+
+**Hypothesis**
+
+My hypothesis is that the pond and river habitats are more suitable for Oregon Spotted Frogs rather than the reservoir. The frogs prefer going to shallow waters to lay eggs, so I wonder if there is a bigger frog population in reservoirs, ponds, or rivers.
+
+**Exploratory Data**
+
+use test data and box plot habitat type and wate
+
+```{r}
+test_data %>%
+  count(HabType)
+```
+
+This cell explains how many different habitat types we are going to look at which are ponds, reservoirs, and rivers.
+
+```{r}
+test_data %>%
+  count(HabType, Water)
+```
+
+Within the habitat type, we can analyze the different variables which is the type of water being deep water, no water, shallow water, and unknown water.
+
+```{r}
+library(kableExtra)
+test_data %>%
+  count(HabType, Water) %>%
+  pivot_wider(names_from = Water, values_from = n, values_fill = 0) 
+  
+  
+```
+
+This breaks down further the type of water and the habitat type into separate columns with the specific count of areas that had deep water, no water, shallow water, and unknown.
+
+```{r}
+test_data %>%
+  select(Water, HabType, Type, Female)
+
+```
+
+This chart has similar comparisons with the addition if a female is present in the habitat which suggests better reproductive chances.
+
+```{r}
+test_data %>%  
+ggplot() +
+  geom_bar(mapping = aes(x = Water)) +
+  labs(title ="Habitat of Oregon Spotted Frogs",
+       x = "Water", y = "HabType")
+```
+
+In this bar graph, shallow water seems to be the favored water type amongst frogs. I think that deep water showed some results because frogs like swimming and adventuring there especially to gather vegetation or food. But shallow water was the popular spot because reproduction occurs there and day to day living because the frogs also like spending a good amount of time out of the water.
+
+**Methodology**
+
+Structure and Subsite
+
+**Conclusion**
+
+The Oregon Spotted Frog was proven to love reservoirs because of the vast area and more controlled space from people and other predatory factors. However, the frogs also liked ponds but because of the smaller area there's more competition which isn't as favored or harmonious compared to reservoirs.

@@ -107,11 +107,11 @@ penguins %>%
 ```
 
 ```{r}
-penguins %>%
-  ggplot() +
-  geom_bar(mapping = aes(x = species)) +
-  labs(title ="Counts of Penguin Species",
-       x = "Species", y = "Count")
+frogs %>%  
+ggplot() +
+  geom_bar(mapping = aes(x = Water)) +
+  labs(title ="Habitat of Oregon Spotted Frogs",
+       x = "Water", y = "HabType")
 ```
 
 This chart represents the count of penguins with relevance to three different species of penguins. The Gentoo has the most amount which its above 30, compared to Adelie and Chinstrap penguins which are below ten.
