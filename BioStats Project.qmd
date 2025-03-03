@@ -1,12 +1,12 @@
 ---
 title: "BioStats Project"
 format: html
-editor: visual
+editor: Sara Taloumis
 ---
 
----
-title: "Homework 4 Generating Hypotheses"
----
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 
 ## Quarto
 
@@ -16,7 +16,7 @@ Quarto enables you to weave together content and executable code into a finished
 1 + 1
 ```
 
-```{}
+```         
 ```
 
 ```{r}
@@ -80,8 +80,6 @@ My hypothesis is that the pond and river habitats are more suitable for Oregon S
 
 **Exploratory Data**
 
-use test data and box plot habitat type and wate
-
 ```{r}
 test_data %>%
   count(HabType)
@@ -128,6 +126,22 @@ In this bar graph, shallow water seems to be the favored water type amongst frog
 **Methodology**
 
 Structure and Subsite
+
+```{r}
+frogs %>%
+  count(Structure)
+```
+
+```{r}
+frogs %>%
+  count(Subsite)
+```
+
+```{r}
+frogs %>%
+  count(Structure, Subsite) %>%
+  pivot_wider(names_from = Structure, values_from = n, values_fill = 0)
+```
 
 **Conclusion**
 
