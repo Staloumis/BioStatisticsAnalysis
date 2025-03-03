@@ -68,15 +68,15 @@ frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidy
 
 **Abstract**
 
-In this analysis of Oregon Spotted Frog data from 2018, the habitats of female and male frogs are analyzed on what habitat allows them to flourish with the consideration of predators and external factors. There are different habitat types, water type, and type of land. With 156 observations and 16 variables, we are going to analyze 3 variables.
+In this analysis of Oregon Spotted Frog data from 2018, the habitats of female and male frogs are analyzed on what habitat allows them to flourish with the consideration of predators and external factors. There are different habitat types, water type, and type of land. With 156 observations and 16 variables, we are going to analyze 3 variables from the "test_data" and 309 observations and 16 variables from the "frogs" data set. This will allow us to understand the impact that different types of habitats have on Oregon Spotted Frogs.
 
 **Introduction**
 
-Oregon Spotted Frogs can be found in Southern Canada, along the Columbia River in Washington, and Klamath Valley in Oregon. Some were located in California but went extirpated and are no longer found in California. These frogs can range from 4.4-10.2 cm in length with the females tending to be larger than the males for reproductive purposes. They reproduce in late winter in river and ponds for about four weeks and females lay one egg mass which contains around 643 eggs. In the data set, Habitat Type, Water, and Type of land is analyzed to see which environment provides the best conditions for these frogs to thrive. The data was gathered by Tom Mock he observed the frogs being released into a pond, reservoir, and river and then tracked their movements. This can tell us how much they thrived in the habitats they encountered.
+Oregon Spotted Frogs can be found in Southern Canada, along the Columbia River in Washington, and Klamath Valley in Oregon. Some were located in California but went extirpated and are no longer found in California. These frogs can range from 4.4-10.2 cm in length with the females tending to be larger than the males for reproductive purposes. They reproduce in late winter in river and ponds for about four weeks and females lay one egg mass which contains around 643 eggs. In the data set, Habitat Type, Water, and Type of land is analyzed to see which environment provides the best conditions for these frogs to thrive. The data was gathered by Tom Mock he observed the frogs being released into a pond, reservoir, and river and then tracked their movements. This can tell us how much they thrived in the habitats they encountered. There are two data sets that will be looked at which are "frogs" and "test_data". They each have different details about the environments that the frogs dwell in so we can better analyze which habitat is the favorite.
 
 **Hypothesis**
 
-My hypothesis is that the pond and river habitats are more suitable for Oregon Spotted Frogs rather than the reservoir. The frogs prefer going to shallow waters to lay eggs, so I wonder if there is a bigger frog population in reservoirs, ponds, or rivers.
+My hypothesis is that the pond and river habitats are more suitable for Oregon Spotted Frogs rather than the reservoir. The frogs prefer going to shallow waters to lay eggs, I believe that ponds and rivers supply those factors.
 
 **Exploratory Data**
 
@@ -121,21 +121,27 @@ ggplot() +
        x = "Water", y = "HabType")
 ```
 
-In this bar graph, shallow water seems to be the favored water type amongst frogs. I think that deep water showed some results because frogs like swimming and adventuring there especially to gather vegetation or food. But shallow water was the popular spot because reproduction occurs there and day to day living because the frogs also like spending a good amount of time out of the water.
+In this bar graph, shallow water seems to be the favored water type among frogs. I think that deep water showed some results because frogs like swimming and adventuring there especially to gather vegetation or food. But shallow water was the popular spot because reproduction occurs there and day to day living because the frogs also like spending a good amount of time out of the water.
 
 **Methodology**
 
-Structure and Subsite
+In this methodology, we analyze the "frogs" data set. The first analysis was on the main data set was from "test_data" which had 156 observations where "frogs" data set had 309 observations. They each analyzed different aspects of the frog's environment such as the type of water, type of land, and type of vegetation which was named "Open" in the Frogs data set. "Open" describes the type of vegetation within the environment which can either help or effect the frogs negatively. The variable "Subsite" organizes the specific location on the river, pond or reservoir where the data was gathered.
+
+In the Exploratory Data section, Habitat Type, Water Type, and amount of females was compared and contrasted. In Habitat Type, included ponds, reservoirs, and rivers. Water type was deep water, shallow water, or no water. There was a section called "Type" that gave more detail about the type of water such as marsh/pond. The data overall was very detailed enough to really give us the picture of what kind of environments these frogs were dwelling in.
 
 ```{r}
 frogs %>%
-  count(Structure)
+  count(Open)
 ```
+
+This data set is from "frogs" which gives a little more detail for the environment studied, in this case its Herbaceous vegetation, leaf litter, open area, woody debris, and woody vegetation. This showed a lot of herbaceous vegetation with some woody debris which is common in all aquatic environments.
 
 ```{r}
 frogs %>%
   count(Subsite)
 ```
+
+Subsite shows the specific location of these aquatic areas broken into 6 categories which are cow camp ponds, cow camp river, north reservoir, north east reservoir, southeast pond, and west reservoir.
 
 ```{r}
 frogs %>%
@@ -143,6 +149,8 @@ frogs %>%
   pivot_wider(names_from = Structure, values_from = n, values_fill = 0)
 ```
 
+This chart puts together subsite and the open type and the count of how many structures were within the different subsites. Herbaceous vegetation was popular in the North and West Reservoirs and woody debris was also plentiful in those reservoirs.
+
 **Conclusion**
 
-The Oregon Spotted Frog was proven to love reservoirs because of the vast area and more controlled space from people and other predatory factors. However, the frogs also liked ponds but because of the smaller area there's more competition which isn't as favored or harmonious compared to reservoirs.
+The Oregon Spotted Frog was proven to love reservoirs because of the vast area and more controlled space from people and other predatory factors. However, the frogs also liked ponds but because of the smaller area, there was more competition which isn't as favored or a harmonious environment compared to reservoirs. This invalidates my hypothesis about frogs preferring ponds or rivers although there was a lot of data gathered from pond regions. We can tell this because there was plentiful amount of data gathered from reservoir regions which can indicate the preferred habitat type which includes herbaceous vegetation areas as well. Shallow water also had lots of data as we can see on the bar chart, this would seem accurate because frogs biologically go up for air at some point and lay eggs and mate in shallow waters. There were only females that were listed in the charts which leaves the question of are the 0's males or it wasn't recorded. However, the amount of females in an area is the most important because of reproduction. The Oregon Spotted Frog can really live in any aquatic environment with vegetation, but after this analysis, reservoirs with herbaceous vegetation and shallow water are the best conditions for this frog to flourish.
