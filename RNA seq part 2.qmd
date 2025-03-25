@@ -8,7 +8,7 @@ editor: Sara Taloumis
 
 ```{r}
 #if (!require("BiocManager", quietly = TRUE))
-    #install.packages("BiocManager")
+   # install.packages("BiocManager")
 
 #BiocManager::install("ComplexHeatmap")
 ```
@@ -21,7 +21,7 @@ editor: Sara Taloumis
 ```
 
 ```{r}
-#library(ComplexHeatmap)
+library(ComplexHeatmap)
 ```
 
 ```{r}
@@ -42,7 +42,7 @@ part <- stringr::str_split(colnames(mat), ",", simplify = TRUE)[,2]
 ```
 
 ```{r}
-#data_col_func <- circlize::colorRamp2(seq(0, max(mat), length.out = 6), viridisLite::magma(6))
+data_col_func <- circlize::colorRamp2(seq(0, max(mat), length.out = 6), viridisLite::magma(6))
 
 ecotype_colors <- c(RColorBrewer::brewer.pal(12, "Set3"), RColorBrewer::brewer.pal(5, "Set1"))
 names(ecotype_colors) <- unique(ecotype)
