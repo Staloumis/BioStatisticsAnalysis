@@ -1,0 +1,73 @@
+---
+title: "RNA-seq Part 1"
+editor: Sara Taloumis
+---
+
+## RNA-seq Part 1
+
+```{r}
+#install.packages("devtools")
+library(devtools)
+```
+
+```{r}
+#devtools::install_github("danmaclean/rbioinfcookbook")
+library(rbioinfcookbook)
+```
+
+```{r}
+#install.packages("forcats")
+
+#if (!require("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("edgeR")
+
+#if (!require("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("Biobase")
+
+library(forcats)
+library(edgeR)
+```
+
+```{r}
+library(Biobase)
+```
+
+```{r}
+genes <- count_dataframe[['gene']]
+count_dataframe[['gene']] <- NULL
+count_matrix <- as.matrix(count_dataframe)
+rownames(count_matrix) <- genes
+```
+
+```{r}
+experiments_of_interest <- c("L1Larvae", "L2Larvae")
+columns_of_interest <- which(pheno_data[['stage']] %in% experiments_of_interest)
+```
+
+```{r}
+grouping <- pheno_data[["stage"]] [columns_of_interest] |> forcats::as_factor()
+```
+
+```{r}
+#count_dge <- edgeR::DGEList(counts = counts_of_interest, group = grouping)
+```
+
+```{r}
+design <- model.matrix(~grouping)
+#eset_dge <- edgeR::estimateDisp(count_dge, design)
+#fit <- edgeR::glmQLFit(eset_dge, design)
+#result <- edgeR::glmQLFTest(fit, coef=2)
+#topTags(result)
+```
+
+FBgn0027527- For the first gene, which is a protein coded gene that influences the phenotype in the fruit fly. It does tell us that there are some abnormal locomotor functions with this gene that can be fatal in the embryonic stage.
+
+FBgn0037430- The expression of this gene is lethal late during the pupal stage and originates from the trichogen cell. This epidermal cell provides the phenotype for bristles or hair on the fly. This is a varying gene with either a very high or low expression rate. There were other recessive genes that were on the chart which were not physical but rather had a biological function. In this case, it told us it was a male.
+
+FBgn0037424- This gene has a more biological process role which involves the function of the open tracheal system. There were no other phenotypes in this gene.
+
+These genes all had different roles; they were listed from Osi20, Osi6, and Osi15. Some had more of a physical role than others but ultimately made up different parts of each fly which ultimately gives each fly its uniqueness. I thought it was cool that each block in the chart had a specific role in the fly's biological processes such as the development of the trachea, regulation of its body size, and eye development. Some of the data had a separate chart that showed different categories where each allele makes an impact. Such as biological development or membrane development.
