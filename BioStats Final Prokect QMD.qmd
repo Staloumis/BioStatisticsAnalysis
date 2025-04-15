@@ -1,22 +1,10 @@
 ---
 title: "BioStats Project"
 format: html
-editor: visual
-author: Sara Taloumis
-execute:
-  keep-md: true
+editor: Sara Taloumis
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-```{r}
-#Load the tidyverse
-library(tidyverse)
-
-frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv')
-```
+------------------------------------------------------------------------
 
 ```{r}
 #install.packages("tidymodels")
@@ -26,6 +14,43 @@ my_data_splits <- initial_split(frogs, prop = 0.5)
 
 exploratory_data <- training(my_data_splits)
 test_data <- testing(my_data_splits)
+```
+
+```{r}
+#Load the tidyverse
+library(tidyverse)
+
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv')
+
+```
+
+```{r}
+# Get the Data
+
+# Read in with tidytuesdayR package 
+# Install from CRAN via: install.packages("tidytuesdayR")
+# This loads the readme and all the datasets for the week of interest
+
+# Either ISO-8601 date or year/week works!
+
+tuesdata <- tidytuesdayR::tt_load('2022-08-02')
+tuesdata <- tidytuesdayR::tt_load(2022, week = 31)
+
+frogs <- tuesdata$frogs
+
+# Or read in the data manually
+
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv')
+
+```
+
+```{r}
+library(tidyverse)
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-08-02/frogs.csv',
+  col_names = TRUE,
+  trim_ws = FALSE,
+  skip = 2
+)
 ```
 
 **Abstract**
@@ -93,7 +118,7 @@ In the Exploratory Data section, Habitat Type, Water Type, and amount of females
 
 ```{r}
 frogs %>%
-  count(Structure)
+  count(Open)
 ```
 
 This data set is from "frogs" which gives a little more detail for the environment studied, in this case its Herbaceous vegetation, leaf litter, open area, woody debris, and woody vegetation. This showed a lot of herbaceous vegetation with some woody debris which is common in all aquatic environments.
