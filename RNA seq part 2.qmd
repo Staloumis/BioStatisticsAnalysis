@@ -1,7 +1,10 @@
 ---
 title: "RNA-seq Part 2"
 format: html
-editor: Sara Taloumis
+editor: visual
+author: Sara Taloumis
+execute:
+  keep-md: true
 ---
 
 ## RNA-seq Part 2
